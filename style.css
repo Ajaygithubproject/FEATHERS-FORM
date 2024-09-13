@@ -1,0 +1,132 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, #ff0000, #ec386b, #ec8ba4, #069bd6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px; /* Add padding to avoid horizontal scroll on mobile */
+  }
+  
+  .login-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .logo {
+    max-width: 1000px; /* Adjust logo size for mobile */
+    width: 100%;
+  }
+  
+  .login-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .input-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .input-group input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .login-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-btn:hover {
+    background-color: #b30000;
+  }
+  
+  .forgot-password {
+    margin-top: 10px;
+  }
+  
+  .forgot-password a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .forgot-password a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive Design for Mobile */
+  @media (max-width: 600px) {
+    body {
+      padding: 10px;
+    }
+  
+    .login-container {
+      padding: 20px; /* Reduce padding on smaller screens */
+    }
+  
+    .login-form h2 {
+      font-size: 20px; /* Reduce font size for mobile */
+    }
+  
+    .input-group input {
+      padding: 8px; /* Adjust input padding for mobile */
+      font-size: 14px; /* Reduce font size */
+    }
+  
+    .login-btn {
+      padding: 8px; /* Adjust button padding for mobile */
+      font-size: 14px; /* Reduce button font size */
+    }
+  
+    .forgot-password a {
+      font-size: 12px; /* Reduce font size for smaller screens */
+    }
+  
+    .logo {
+      max-width: 1000px; /* Further reduce logo size */
+    }
+  }
+  
