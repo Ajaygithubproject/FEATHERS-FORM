@@ -1,24 +1,25 @@
-/* styles.css */
-
 /* Set background image for the body */
 body {
-    
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  font-family: 'Poppins', sans-serif; /* Ensure the font is mobile-friendly */
 }
-.hero-body {
-    background: linear-gradient(45deg, #ff0000, 
-    #ec386b, #ec8ba4, #069bd6);
-}
-/* Customize the hero section */
 
+/* Customize the hero section */
+.hero-body {
+  background: linear-gradient(45deg, #ff0000, #ec386b, #ec8ba4, #069bd6);
+  padding: 20px;
+  text-align: center; /* Center the hero content */
+}
 
 /* Form container styles */
 .container {
   background-color: rgba(255, 255, 255, 0.686);
   border-radius: 10px;
   padding: 20px;
+  max-width: 600px;
+  margin: 20px auto; /* Center container horizontally */
 }
 
 /* Button styles */
@@ -26,12 +27,16 @@ body {
   background-color: #3856ec;
   border-color: #8338ec;
   color: white;
+  width: 100%; /* Full width for mobile */
+  padding: 10px;
 }
 
 .button.is-danger {
   background-color: #ff0000;
   border-color: #ff006e;
   color: white;
+  width: 100%; /* Full width for mobile */
+  padding: 10px;
 }
 
 /* Success message styling */
@@ -40,4 +45,43 @@ body {
   background-color: green;
   padding: 10px;
   border-radius: 5px;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 600px) {
+  /* Reduce padding and adjust text alignment for smaller screens */
+  .hero-body {
+    padding: 10px;
+    text-align: center;
+  }
+
+  .container {
+    padding: 15px;
+  }
+
+  /* Adjust button padding and font size for smaller screens */
+  .button.is-primary, .button.is-danger {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Adjust text size inside form elements for readability */
+  input, textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 24px; /* Reduce the hero title font size */
+  }
+
+  /* Adjust the message style for mobile */
+  #message {
+    font-size: 14px;
+    padding: 10px;
+  }
 }
