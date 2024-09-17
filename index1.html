@@ -16,6 +16,8 @@
         </div>
       </div>
     </section>
+
+    
     <form id="form" class="container m-4 pl-4" method="POST">
 
         <div class="field">
@@ -246,6 +248,18 @@
         </div>
       </div>
 
+      <div class="field">
+        <label class="label">Next Follow Date </label>
+        <div class="control">
+          <input
+            class="input"
+            type="date"
+            placeholder="Select Date"
+            name="Next Follow Date"
+          />
+        </div>
+      </div>
+
       <div class="field is-grouped">
         <div class="control">
           <button class="button is-primary" type="submit" id="submit-button">
@@ -270,19 +284,50 @@
       "
     ></div>
     
+      
+      <div class="field is-grouped"></div>
+        
+        <div class="control">
+          <button class="button is-info" type="button" id="search-button">
+            Search Existing Data
+          </button>
+        </div>
+        <div class="control">
+          <button class="button is-warning" type="button" id="edit-button" style="display:none;">
+            Edit
+          </button>
+        </div>
       </div>
+      
+      <div id="message" style="display: none; margin: 20px;"></div>
+
       <div>
-        <a href="https://docs.google.com/spreadsheets/d/10MGKP0slBIHuzWSvb3aUb_3ypXgEL2-tlcADSk6_E7o/edit?gid=0#gid=0" class="sheet">
+        <a href="https://docs.google.com/spreadsheets/d/10MGKP0slBIHuzWSvb3aUb_3ypXgEL2-tlcADSk6_E7o/edit?gid=0#gid=0" 
+        
+        class="sheet">
           Open Google sheet</a></div>
+        </div>
+        
     </form>
     
 
+    <form id="form" class="container m-4 pl-4" method="POST">
+
+    
+      <!-- Your existing form fields here -->
+      
+      <!-- ID field for editing -->
+      
+      
+      
+    </form>
+
     <script>
+      // Submit form
       document.getElementById("form").addEventListener("submit", function (e) {
-        e.preventDefault(); // Prevent the default form submission
+        e.preventDefault();
         document.getElementById("message").textContent = "Submitting..";
         document.getElementById("message").style.display = "block";
-        document.getElementById("submit-button").disabled = true;
 
         // Collect the form data
         var formData = new FormData(this);
@@ -290,14 +335,12 @@
         for (var pair of formData.entries()) {
           keyValuePairs.push(pair[0] + "=" + pair[1]);
         }
-
         var formDataString = keyValuePairs.join("&");
 
-        // Send a POST request to your Google Apps Script
+        // Send POST request
         fetch(
-            "https://script.google.com/macros/s/AKfycbxCyegfDC0__xzbIESXKziXhhpfvJTIscAlCEZUpwkWv4bem9R2ti3wCFCisABKy1uh/exec",
+            "https://script.google.com/macros/s/AKfycbywq03_0UYOg4V8ZDnlWAlhtv0-8CE3gIuSw_4lnOpw-6ozIEdeoK0tYfPMQQ3Dfh-L/exec",
           {
-            redirect: "follow",
             method: "POST",
             body: formDataString,
             headers: {
@@ -305,36 +348,46 @@
             },
           }
         )
-          .then(function (response) {
-            // Check if the request was successful
-            if (response) {
-              return response; // Assuming your script returns JSON response
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById("message").textContent = "Data submitted successfully!";
+            document.getElementById("form").reset();
+            setTimeout(() => document.getElementById("message").style.display = "none", 3000);
+          })
+          .catch(error => {
+            document.getElementById("message").textContent = "Error submitting the form.";
+            console.error(error);
+          });
+      });
+
+      // Search function
+      document.getElementById("search-button").addEventListener("click", function () {
+        const searchQuery = prompt("Enter a search query:");
+        fetch(`https://script.google.com/macros/s/AKfycbywq03_0UYOg4V8ZDnlWAlhtv0-8CE3gIuSw_4lnOpw-6ozIEdeoK0tYfPMQQ3Dfh-L/exec?search=${encodeURIComponent(searchQuery)}`)
+          .then(response => response.json())
+          .then(data => {
+            console.log("Search results:", data);
+            if (data.length > 0) {
+              // Populate the form with the first result for editing
+              const result = data[0];
+              for (const key in result) {
+                if (document.querySelector(`[name="${key}"]`)) {
+                  document.querySelector(`[name="${key}"]`).value = result[key];
+                }
+              }
+              document.getElementById("record-id").value = result.id;  // Set the ID for editing
+              document.getElementById("id-field").style.display = "block"; // Show the ID field
+              document.getElementById("edit-button").style.display = "block"; // Show Edit button
             } else {
-              throw new Error("Failed to submit the form.");
+              alert("No records found.");
             }
           })
-          .then(function (data) {
-            // Display a success message
-            document.getElementById("message").textContent =
-              "Data submitted successfully!";
-            document.getElementById("message").style.display = "block";
-            document.getElementById("message").style.backgroundColor = "green";
-            document.getElementById("message").style.color = "beige";
-            document.getElementById("submit-button").disabled = false;
-            document.getElementById("form").reset();
+          .catch(error => console.error("Error fetching search results:", error));
+      });
 
-            setTimeout(function () {
-              document.getElementById("message").textContent = "";
-              document.getElementById("message").style.display = "none";
-            }, 2600);
-          })
-          .catch(function (error) {
-            // Handle errors, you can display an error message here
-            console.error(error);
-            document.getElementById("message").textContent =
-              "An error occurred while submitting the form.";
-            document.getElementById("message").style.display = "block";
-          });
+      // Edit function
+      document.getElementById("edit-button").addEventListener("click", function () {
+        document.getElementById("form").submit();
       });
     </script>
     
